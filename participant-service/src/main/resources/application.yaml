@@ -5,3 +5,9 @@ spring:
     name: participant-service
   config:
     import: "optional:configserver:http://localhost:8088"
+
+springdoc:
+  swagger-ui:
+    path: /
+  api-docs:
+    path: /api-docs
