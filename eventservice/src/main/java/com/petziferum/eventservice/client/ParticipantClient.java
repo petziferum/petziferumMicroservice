@@ -14,4 +14,7 @@ public interface ParticipantClient {
     // GetMapping ist um einen Endpunkt aufzurufen (Call)!
     @GetExchange("/participants/event/{eventId}")
     public List<Participant> findByEvent(@PathVariable("eventId") String eventId);
+
+    @GetExchange("/participants/all")
+    public List<Participant> findAll();
 }

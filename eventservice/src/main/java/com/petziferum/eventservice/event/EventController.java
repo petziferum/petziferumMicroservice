@@ -60,6 +60,14 @@ public class EventController {
         return events;
     }
 
+    @GetMapping("/allparticipants")
+    public List<Participant> findAllParticipants() {
+        LOGGER.info("####### Find all Participants");
+        List<Participant> pList = participantClient.findAll();
+        LOGGER.info("Participants: " + pList);
+        return pList;
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable String id) {
         LOGGER.info("Event ID: " + id);

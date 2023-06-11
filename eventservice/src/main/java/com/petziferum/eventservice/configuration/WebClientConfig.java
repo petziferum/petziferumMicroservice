@@ -16,20 +16,21 @@ import reactor.util.Logger;
 public class WebClientConfig {
 
     @Autowired
-    private LoadBalancedExchangeFilterFunction lbFunction;
+    private LoadBalancedExchangeFilterFunction filterFunction;
 
     @Bean
     public WebClient ParticipantWebClient() {
         return WebClient.builder()
-                .baseUrl("http://localhost:8082")
-                .filter(lbFunction)
+                .baseUrl("http://participant-service")
+                .filter(filterFunction)
                 .build();
     }
 
     @Bean
     public ParticipantClient participantClient() {
         log.info("####### get ParticipantClient");
-        HttpServiceProxyFactory httpServiceProxyFactory = HttpServiceProxyFactory
+        HttpServiceProxyFactory httpServiceProxyFactory
+                = HttpServiceProxyFactory
                 .builder(WebClientAdapter.forClient(ParticipantWebClient()))
                 .build();
         return httpServiceProxyFactory.createClient(ParticipantClient.class);
