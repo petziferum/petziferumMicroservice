@@ -1,0 +1,4 @@
+#config Datei
+
+lesen = open("config.txt", "r")
+name = "Der Name"
