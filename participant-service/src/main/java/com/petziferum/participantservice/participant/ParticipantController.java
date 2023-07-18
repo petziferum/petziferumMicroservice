@@ -1,6 +1,10 @@
 package com.petziferum.participantservice.participant;
 
 
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +16,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@OpenAPIDefinition(
+        info = @Info(
+                title = "Participant API",
+                version = "1.0",
+                description = "Documentation Participant API v1.0"
+        ), externalDocs = @ExternalDocumentation(
+                description = "OpenAPI Annotations",
+                url = "https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Annotations"
+        ),
+        tags = {
+                @Tag(name = "participants", description = "Participant API", externalDocs = @ExternalDocumentation(
+                        description = "OpenAPI Annotations",
+                        url = "https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Annotations"))
+        }
+)
 @Slf4j
 @RestController
 @RequestMapping("/participants")
