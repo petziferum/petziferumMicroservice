@@ -2,10 +2,6 @@ package com.petziferum.eventservice.event;
 
 import com.petziferum.eventservice.client.Participant;
 import com.petziferum.eventservice.client.ParticipantClient;
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
