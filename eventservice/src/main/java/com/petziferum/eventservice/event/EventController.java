@@ -15,6 +15,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Slf4j
@@ -80,12 +81,34 @@ public class EventController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get Event by ID", description = "Get Event by ID")
-    public ResponseEntity<Event> getEventById(@PathVariable String id) {
+    public ResponseEntity<Optional<Event>> getEventById(@PathVariable String id) {
         LOGGER.info("Event ID: " + id);
-        Event event = eventRepository.findById(id);
+        Optional<Event> event = eventRepository.findById(id);
         if (event == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(event);
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update an Event", description = "Update an existing Event by its ID")
+    public ResponseEntity<Event> updateEvent(@PathVariable String id, @Valid @RequestBody Event updatedEvent) {
+        LOGGER.info("Updating Event with ID: {}", id);
+
+        Optional<Event> existingEvent = eventRepository.findById(id);
+        if (!existingEvent.isPresent()) {
+            LOGGER.error("Event not found with ID: {}", id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        // Update the existing event with new data
+        Event eventToUpdate = existingEvent.get();
+        eventToUpdate.setName(updatedEvent.getName());
+        eventToUpdate.setDescription(updatedEvent.getDescription());
+        // ... set other fields as needed
+
+        Event updated = eventRepository.save(eventToUpdate);
+        LOGGER.info("Event updated: {}", updated);
+        return ResponseEntity.ok(updated);
     }
 }

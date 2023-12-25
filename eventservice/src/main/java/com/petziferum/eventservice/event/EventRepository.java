@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class EventRepository {
@@ -23,11 +24,16 @@ public class EventRepository {
         return event;
     }
 
-    public Event findById(String id) {
-        return events.stream().filter(event -> event.getId().equals(id)).findFirst().orElse(null);
+    public Optional<Event> findById(String id) {
+        return events.stream().filter(event -> event.getId().equals(id)).findFirst();
     }
 
     public List<Event> findAll() {
         return events;
+    }
+
+    public Event save(Event eventToUpdate) {
+        events.add(eventToUpdate);
+        return eventToUpdate;
     }
 }
