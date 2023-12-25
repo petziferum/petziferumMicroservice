@@ -2,6 +2,7 @@ package com.petziferum.eventservice.event;
 
 import com.petziferum.eventservice.client.Participant;
 import com.petziferum.eventservice.client.ParticipantClient;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ public class EventController {
     private static final Logger LOGGER = LoggerFactory.getLogger(EventController.class);
 
     @PostMapping("/new")
+    @Operation(summary = "Create a new Event", description = "Create a new Event")
     public ResponseEntity<Event> postEvent(@RequestBody Event event) {
         LOGGER.info("Event: " + event);
         Event e = eventRepository.addEvent(event);
@@ -35,11 +37,13 @@ public class EventController {
     }
 
     @GetMapping("/all")
+    @Operation(summary = "Get all Events", description = "Get all Events")
     public ResponseEntity<List<Event>> allEvents() {
         return ResponseEntity.ok(eventRepository.findAll());
     }
 
     @GetMapping("/withparticipants")
+    @Operation(summary = "Get all Events with Participants", description = "Get all Events with Participants")
     public List<Event> findAllEventsWithParticipants() {
         LOGGER.info("####### Find all Events with Participants");
        List<Event> events = eventRepository.findAll();
@@ -61,6 +65,7 @@ public class EventController {
     }
 
     @GetMapping("/allparticipants")
+    @Operation(summary = "Get all Participants", description = "Get all Participants")
     public List<Participant> findAllParticipants() {
         LOGGER.info("####### Find all Participants");
         List<Participant> pList = participantClient.findAll();
@@ -69,6 +74,7 @@ public class EventController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get Event by ID", description = "Get Event by ID")
     public ResponseEntity<Event> getEventById(@PathVariable String id) {
         LOGGER.info("Event ID: " + id);
         Event event = eventRepository.findById(id);
