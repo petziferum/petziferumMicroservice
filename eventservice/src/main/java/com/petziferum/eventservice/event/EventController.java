@@ -96,7 +96,7 @@ public class EventController {
         LOGGER.info("Updating Event with ID: {}", id);
 
         Optional<Event> existingEvent = eventRepository.findById(id);
-        if (!existingEvent.isPresent()) {
+        if (existingEvent.isEmpty()) {
             LOGGER.error("Event not found with ID: {}", id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
