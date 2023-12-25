@@ -3,6 +3,7 @@ package com.petziferum.eventservice.event;
 import com.petziferum.eventservice.client.Participant;
 import com.petziferum.eventservice.client.ParticipantClient;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,19 +22,23 @@ import java.util.List;
 @RequestMapping("events")
 public class EventController {
 
-    @Autowired
-    EventRepository eventRepository;
+    private final EventRepository eventRepository;
+    private final ParticipantClient participantClient;
 
     @Autowired
-    private ParticipantClient participantClient;
+    public EventController(EventRepository eventRepository, ParticipantClient participantClient) {
+        this.eventRepository = eventRepository;
+        this.participantClient = participantClient;
+    }
+
     private static final Logger LOGGER = LoggerFactory.getLogger(EventController.class);
 
     @PostMapping("/new")
     @Operation(summary = "Create a new Event", description = "Create a new Event")
-    public ResponseEntity<Event> postEvent(@RequestBody Event event) {
-        LOGGER.info("Event: " + event);
-        Event e = eventRepository.addEvent(event);
-        return ResponseEntity.ok(e);
+    public ResponseEntity<Event> postEvent(@Valid @RequestBody Event event) {
+        LOGGER.info("Post Event: {}", event);
+        Event createdEvent = eventRepository.addEvent(event);
+        return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
     }
 
     @GetMapping("/all")
